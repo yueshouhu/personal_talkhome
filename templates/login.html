@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="/static/sign.css">
+<body>
+ <div class="container">
+
+      <form class="form-signin" method="post" novalidate>
+          {% csrf_token %}
+        <h2 class="form-signin-heading">请登录</h2>
+
+        <input type="text" class="form-control" placeholder="username" name="username" required autofocus>
+
+        <input type="text"  class="form-control" placeholder="Password" name="password" required>
+
+          <div><span STYLE="color: red">{{ error_msg }}</span></div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+          没有账号？在此点击<a href="/register">注册</a>
+      </form>
+
+
+    </div> <!-- /container -->
+
+</body>
+</html>

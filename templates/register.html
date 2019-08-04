@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<h1>月守护聊天室注册页面</h1>
+<form action="/register/" method="post" novalidate>
+    {% csrf_token %}
+<p>--昵称---{{ obj.username }}{{ obj.errors.username.0 }}</p>
+<p>--密码---{{ obj.password }}{{ obj.errors.password.0 }}</p>
+
+<p>-验证码-<input type="text" placeholder="请输入验证码" name="check"> <img src="/yanzhengma" alt="">{{ code_error }}</p>
+<p><input type="submit" value="提交"></p>
+</form>
+</body>
+</html>

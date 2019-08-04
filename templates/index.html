@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python聊天室</title>
+</head>
+<body>
+    <div style="width: 80%;margin: 0 auto">
+        <input type="text" id="txt"/>
+        <input type="button" id="btn" value="提交" onclick="sendMsg();"/>
+        <a href="/login/"><input type="button" id="close" value="关闭连接" onclick="closeConn();"/></a>
+        
+        <span id="OneUser"  style="float: right">{{username}}</span>
+
+    <div id="container" style="border: 1px solid #dddddd;margin: 20px;min-height: 500px;">
+        <div style="width: 13%;margin: 0 auto"><a href="#"  id="look"  onclick="Hmessage();" >查看历史消息...</a></div>
+    </div>
+    </div>
+
+    <script src="/static/jquery-3.3.1/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            wsUpdater.start();
+        });
+        var wsUpdater = {
+            socket: null,
+            uid: null,
+            start: function() {
+                console.log(123);
+                var url = "ws://127.0.0.1:8088/chat/";
+        {#         var chatSocket = new WebSocket(#}
+        {#'ws://' + window.location.host +#}
+        {#'/ws/chat/' + roomName + '/');#}
+                wsUpdater.socket = new WebSocket('ws://127.0.0.1:8088/chat');                 //建立连接
+
+                var oneusr=$("#OneUser").text();
+
+                wsUpdater.uid=oneusr;
+                wsUpdater.socket.onmessage = function(event) {        //接收服务器数据
+                    wsUpdater.showMessage(event.data);
+                }
+            },
+            showMessage: function(content) {                 //展示消息
+
+                $('#container').append(content);
+            }
+        };
+
+        function sendMsg() {                                 //发送消息
+            var msg = {
+                uid: wsUpdater.uid,
+                message: $("#txt").val()
+            };
+             wsUpdater.socket.send(JSON.stringify(msg));
+
+        }
+        function Hmessage() {
+            var msg = {
+                uid: wsUpdater.uid,
+                message: "查看历史消息"
+            };
+            wsUpdater.socket.send(JSON.stringify(msg));
+        }
+</script>
+
+</body>
+</html>
